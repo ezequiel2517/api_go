@@ -8,15 +8,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func cargarEnv() {
-	err := godotenv.Load()
+func cargarEnv(env string) {
+	err := godotenv.Load(env)
 	if err != nil {
-		log.Fatal("ERROR AL CARGAR ARCHIVO .env")
+		log.Fatalf("ERROR AL CARGAR .ENV: %v", err)
 	}
 }
 
 func main() {
-	cargarEnv()
+	cargarEnv(".env.dev")
 	server := api.New(os.Getenv("PUERTO"))
 	server.ListenAndServe()
 }
