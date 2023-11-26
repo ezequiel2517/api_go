@@ -19,7 +19,6 @@ func GetConnection() *sql.DB {
 		os.Getenv("POSTGRES_DB"),
 	)
 
-	// Conecta a la base de datos
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		log.Fatal(err)
