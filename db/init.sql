@@ -1,4 +1,7 @@
-\c postgres;
+create database api_des;
+create database api_qa;
+
+\c api_des;
 
 CREATE TABLE IF NOT EXISTS drugs (
     id SERIAL PRIMARY KEY,
@@ -27,3 +30,31 @@ CREATE TABLE IF NOT EXISTS vaccinations (
 		REFERENCES drugs(id)
 );
 
+\c api_qa;
+
+CREATE TABLE IF NOT EXISTS drugs (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    approved BOOLEAN,
+    min_dose INTEGER CHECK (min_dose >= 0),
+    max_dose INTEGER CHECK (max_dose >= 0),
+    available_at DATE
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+	email VARCHAR(50),
+	password VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS vaccinations (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+	drug_id INTEGER,
+	dose INTEGER,
+	fecha DATE,
+	CONSTRAINT fk_drug_id
+		FOREIGN KEY(drug_id) 
+		REFERENCES drugs(id)
+);

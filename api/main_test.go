@@ -11,7 +11,7 @@ import (
 
 func truncateTables() {
 	db := db.GetConnection()
-	tables := []string{"users", "vaccinations", "drugs"} // Lista de tus tablas
+	tables := []string{"users", "vaccinations", "drugs"}
 
 	for _, table := range tables {
 		query := fmt.Sprintf("TRUNCATE TABLE %s CASCADE", table)
