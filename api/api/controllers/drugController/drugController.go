@@ -18,6 +18,13 @@ func InsertDrug(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := drug.DrugValidate(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Formato de JSON incorrecto."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
 	db := db.GetConnection()
 	sqlStatement := `
 	INSERT INTO drugs (name, approved, min_dose, max_dose, available_at)
@@ -60,6 +67,13 @@ func UpdateDrug(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		errorMessage := map[string]string{"error": "Error al convertir body."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
+	if err := drug.DrugValidate(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Formato de JSON incorrecto."}
 		json.NewEncoder(w).Encode(errorMessage)
 		return
 	}

@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "1878f208-82ed-4a88-8137-5699f8b619ec",
+		"name": "API_GO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24145225"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Ezequiel\",\r\n    \"Email\": \"squiel.dutra@gmail.com\",\r\n    \"Password\": \"miContrasenia\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000\\signup",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"squiel.dutra@gmail.com\",\r\n    \"Password\": \"miContrasenia\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000\\login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "drugs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Aspirina\",\r\n    \"Approved\": true,\r\n    \"Min_dose\": 1,\r\n    \"Max_dose\": 5,\r\n    \"Available_at\": \"2023-12-26T00:00:00Z\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000\\drugs",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"drugs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "drugs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InNxdWllbC5kdXRyYUBnbWFpbC5jb20iLCJleHAiOjE3MDEwNjM0ODF9.Bspq_TNPUF3wmD9CFcn7x0oISs73WL0GDBYa44uf24w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000\\drugs",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"drugs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vaccinations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InNxdWllbC5kdXRyYUBnbWFpbC5jb20iLCJleHAiOjE3MDEwNjM0ODF9.Bspq_TNPUF3wmD9CFcn7x0oISs73WL0GDBYa44uf24w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Vacunacion\",\r\n    \"Drug_id\": 1,\r\n    \"Dose\": 3,\r\n    \"Date\": \"2023-12-26T00:00:00Z\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000\\vaccinations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"vaccinations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vaccinations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InNxdWllbC5kdXRyYUBnbWFpbC5jb20iLCJleHAiOjE3MDEwNjM0ODF9.Bspq_TNPUF3wmD9CFcn7x0oISs73WL0GDBYa44uf24w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000\\vaccinations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"vaccinations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

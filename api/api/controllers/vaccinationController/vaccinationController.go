@@ -20,6 +20,13 @@ func InsertVaccination(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := vaccination.VaccinationValidate(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Formato de JSON incorrecto."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
 	droga, err := drugController.GetDrug(vaccination.Drug_id)
 
 	if err == sql.ErrNoRows {
@@ -161,6 +168,13 @@ func UpdateVaccination(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		errorMessage := map[string]string{"error": "Error al convertir body."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
+	if err := vaccination.VaccinationValidate(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Formato de JSON incorrecto."}
 		json.NewEncoder(w).Encode(errorMessage)
 		return
 	}
