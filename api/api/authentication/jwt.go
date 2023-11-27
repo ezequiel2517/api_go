@@ -2,6 +2,7 @@ package authentication
 
 import (
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -15,10 +16,14 @@ type JWTClaims struct {
 var JWTKey = []byte(os.Getenv("MY_VARIABLE"))
 
 func GenerarToken(email string) (string, error) {
+	envVarStr := os.Getenv("TOKEN_TIMEOUT")
+	tokenTimeout, _ := strconv.Atoi(envVarStr)
+	timeoutDuration := time.Duration(tokenTimeout) * time.Second
+
 	claims := &JWTClaims{
 		Email: email,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(timeoutDuration).Unix(),
 		},
 	}
 

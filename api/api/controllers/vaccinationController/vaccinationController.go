@@ -20,7 +20,7 @@ func InsertVaccination(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	droga, err := drugController.GetDrug(vaccination.DrugId)
+	droga, err := drugController.GetDrug(vaccination.Drug_id)
 
 	if err == sql.ErrNoRows {
 		w.WriteHeader(http.StatusBadRequest)
@@ -36,9 +36,16 @@ func InsertVaccination(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if droga.AvailableAt.After(vaccination.Fecha) {
+	if droga.Available_at.After(vaccination.Date) {
 		w.WriteHeader(http.StatusBadRequest)
 		errorMessage := map[string]string{"error": "Fecha de vacunación previa a fecha de disponibilidad de droga."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
+	if vaccination.Dose < droga.Min_dose || vaccination.Dose > droga.Max_dose {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Dosis de vacunación fuera del rango permitido de droga."}
 		json.NewEncoder(w).Encode(errorMessage)
 		return
 	}
@@ -49,7 +56,7 @@ func InsertVaccination(w http.ResponseWriter, r *http.Request) {
 	VALUES ($1, $2, $3, $4)
 	RETURNING id`
 
-	_, err = db.Exec(sqlStatement, vaccination.Name, vaccination.DrugId, vaccination.Dose, vaccination.Fecha)
+	_, err = db.Exec(sqlStatement, vaccination.Name, vaccination.Drug_id, vaccination.Dose, vaccination.Date)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +89,7 @@ func GetVaccinations(w http.ResponseWriter, r *http.Request) {
 	var vaccinations []models.Vaccination
 	for rows.Next() {
 		var vaccination models.Vaccination
-		err := rows.Scan(&vaccination.ID, &vaccination.Name, &vaccination.DrugId, &vaccination.DrugId, &vaccination.Fecha)
+		err := rows.Scan(&vaccination.Id, &vaccination.Name, &vaccination.Drug_id, &vaccination.Dose, &vaccination.Date)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			errorMessage := map[string]string{"error": "Error al obtener drogas de la base de datos."}
@@ -158,7 +165,7 @@ func UpdateVaccination(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	droga, err := drugController.GetDrug(vaccination.DrugId)
+	droga, err := drugController.GetDrug(vaccination.Drug_id)
 
 	if err == sql.ErrNoRows {
 		w.WriteHeader(http.StatusBadRequest)
@@ -174,9 +181,16 @@ func UpdateVaccination(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if droga.AvailableAt.After(vaccination.Fecha) {
+	if droga.Available_at.After(vaccination.Date) {
 		w.WriteHeader(http.StatusBadRequest)
 		errorMessage := map[string]string{"error": "Fecha de vacunación previa a fecha de disponibilidad de droga."}
+		json.NewEncoder(w).Encode(errorMessage)
+		return
+	}
+
+	if vaccination.Dose < droga.Min_dose || vaccination.Dose > droga.Max_dose {
+		w.WriteHeader(http.StatusBadRequest)
+		errorMessage := map[string]string{"error": "Dosis de vacunación fuera del rango permitido de droga."}
 		json.NewEncoder(w).Encode(errorMessage)
 		return
 	}
@@ -188,7 +202,7 @@ func UpdateVaccination(w http.ResponseWriter, r *http.Request) {
 	dose = $3, fecha = $4 
 	WHERE id = $5`
 
-	_, err = db.Exec(sqlStatement, vaccination.Name, vaccination.DrugId, vaccination.Dose, vaccination.Fecha, id)
+	_, err = db.Exec(sqlStatement, vaccination.Name, vaccination.Drug_id, vaccination.Dose, vaccination.Date, id)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

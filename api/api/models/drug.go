@@ -5,10 +5,10 @@ import (
 )
 
 type Drug struct {
-	ID          int       `json:"ID"`
-	Name        string    `json:"Name" validate:"required"`
-	Approved    bool      `json:"Approved" validate:"required"`
-	MinDose     int       `json:"MinDose" validate:"required"`
-	MaxDose     int       `json:"MaxDose" validate:"required"`
-	AvailableAt time.Time `json:"AvailableAt" validate:"required"`
+	Id           int       `json:"Id"`
+	Name         string    `json:"Name" validate:"required"`
+	Approved     bool      `json:"Approved" validate:"required"`
+	Min_dose     int       `json:"Min_dose" validate:"required"`
+	Max_dose     int       `json:"Max_dose" validate:"required"`
+	Available_at time.Time `json:"Available_at" validate:"required"`
 }

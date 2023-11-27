@@ -5,9 +5,9 @@ import (
 )
 
 type Vaccination struct {
-	ID     int       `json:"ID"`
-	Name   string    `json:"Name" validate:"required"`
-	DrugId int       `json:"DrugId" validate:"required"`
-	Dose   int       `json:"Dose" validate:"required"`
-	Fecha  time.Time `json:"Fecha" validate:"required"`
+	Id      int       `json:"Id"`
+	Name    string    `json:"Name" validate:"required"`
+	Drug_id int       `json:"Drug_id" validate:"required"`
+	Dose    int       `json:"Dose" validate:"required"`
+	Date    time.Time `json:"Date" validate:"required"`
 }

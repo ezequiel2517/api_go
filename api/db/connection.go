@@ -21,7 +21,7 @@ func GetConnection() *sql.DB {
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err.Error())
 	}
 	return db
 }

@@ -24,7 +24,7 @@ func InsertDrug(w http.ResponseWriter, r *http.Request) {
 	VALUES ($1, $2, $3, $4, $5)
 	RETURNING id`
 
-	_, err = db.Exec(sqlStatement, drug.Name, drug.Approved, drug.MinDose, drug.MaxDose, drug.AvailableAt)
+	_, err = db.Exec(sqlStatement, drug.Name, drug.Approved, drug.Min_dose, drug.Max_dose, drug.Available_at)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -72,7 +72,7 @@ func UpdateDrug(w http.ResponseWriter, r *http.Request) {
 	available_at = $5 
 	WHERE id = $6`
 
-	_, err = db.Exec(sqlStatement, drug.Name, drug.Approved, drug.MinDose, drug.MaxDose, drug.AvailableAt, id)
+	_, err = db.Exec(sqlStatement, drug.Name, drug.Approved, drug.Min_dose, drug.Max_dose, drug.Available_at, id)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -105,7 +105,7 @@ func GetDrugs(w http.ResponseWriter, r *http.Request) {
 	var drugs []models.Drug
 	for rows.Next() {
 		var drug models.Drug
-		err := rows.Scan(&drug.ID, &drug.Name, &drug.Approved, &drug.MinDose, &drug.MaxDose, &drug.AvailableAt)
+		err := rows.Scan(&drug.Id, &drug.Name, &drug.Approved, &drug.Min_dose, &drug.Max_dose, &drug.Available_at)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			errorMessage := map[string]string{"error": "Error al obtener drogas de la base de datos."}
@@ -129,7 +129,7 @@ func GetDrug(id int) (models.Drug, error) {
 
 	row := db.QueryRow(sqlStatement, id)
 	var drug models.Drug
-	err := row.Scan(&drug.ID, &drug.Name, &drug.Approved, &drug.MinDose, &drug.MaxDose, &drug.AvailableAt)
+	err := row.Scan(&drug.Id, &drug.Name, &drug.Approved, &drug.Min_dose, &drug.Max_dose, &drug.Available_at)
 	if err != nil {
 		return models.Drug{}, err
 	}
